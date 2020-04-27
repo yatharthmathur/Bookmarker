@@ -4,6 +4,12 @@
     <script>
         window.$ = window.jquery = require('jquery');
         require('bootstrap');
+
+        function readyFunction(){
+            if(localStorage.length == 0)
+                window.location.replace('login.html')
+        }
+        readyFunction();
         $(document).ready(function(){
             $('#link').on('click', function(){
                 console.log('click');
@@ -11,7 +17,7 @@
                 shell.openExternal('http://www.google.com/')
             });
         });
-            
+        
     </script>
 </head>
 <body>
