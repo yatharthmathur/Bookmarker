@@ -2,19 +2,28 @@ const { app, BrowserWindow } = require('electron')
 
 function createWindow () {
   // Create the browser window.
-  const win = new BrowserWindow({
+//   const mainWindow = new BrowserWindow({
+//     width: 400,
+//     height: 400,
+//     webPreferences: {
+//       nodeIntegration: true
+//     },
+//     frame : false
+//   })
+  const loginWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
       nodeIntegration: true
-    }
+    },
+    title:'Bookmarker'
   })
 
   // and load the index.html of the app.
-  win.loadFile('index.html')
+  loginWindow.loadFile('login.html')
 
   // Open the DevTools.
-  win.webContents.openDevTools()
+  loginWindow.webContents.openDevTools()
 }
 
 // This method will be called when Electron has finished
