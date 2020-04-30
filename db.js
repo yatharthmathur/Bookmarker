@@ -16,10 +16,6 @@ readyFunction();
 function cleardb(){
     var data = {};
     data['username'] = localStorage.username;
-    var a = $("#Save_bookmark").children();
-    data['htmlContent'] = a.html();
-    console.log(data['htmlContent']);
-
     client.connect(function(err, client){
         if(err)
             throw err;
@@ -36,8 +32,7 @@ function signOut(){
     event.preventDefault();
     var data = {};
     data['username'] = localStorage.username;
-    var a = $("#Save_bookmark").children();
-    data['htmlContent'] = a.html();
+    data['htmlContent'] = $("#add_bookmark").html();
     console.log(data['htmlContent']);
 
     client.connect(function(err, client){
@@ -71,9 +66,7 @@ $(document).ready(function(){
 
     $("#Save_bookmark").on( "submit", function( event ) {
         event.preventDefault();
-
-        var a = $("#Save_bookmark").children();
-        data['htmlContent'] = a.html();
+        data['htmlContent'] = $("#add_bookmark").html();
         console.log(data['htmlContent']);
 
 
