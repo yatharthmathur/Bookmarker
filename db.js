@@ -3,7 +3,7 @@ require('popper.js');
 require('bootstrap');
 const bcrypt = require('bcryptjs');
 const MongoClient = require('mongodb').MongoClient;
-const url = "mongodb+srv://yatharth:<password>@cluster0-p0dyy.mongodb.net/test?retryWrites=true&w=majority";
+const url = "mongodb+srv://yatharth:yatharth@123@cluster0-p0dyy.mongodb.net/test?retryWrites=true&w=majority";
 const dbName = 'bookmarker';
 const client = new MongoClient(url);
 
@@ -13,11 +13,46 @@ function readyFunction(){
 };
 readyFunction();
 
+function cleardb(){
+    var data = {};
+    data['username'] = localStorage.username;
+    var a = $("#Save_bookmark").children();
+    data['htmlContent'] = a.html();
+    console.log(data['htmlContent']);
+
+    client.connect(function(err, client){
+        if(err)
+            throw err;
+        const db = client.db(dbName);
+        const userCollection = db.collection('bookmark');
+        // userCollection.save({'username':data['username'],'bookmark_contents':data['htmlContent']});
+        userCollection.remove({'username':data['username']});
+        console.log("Deletion complete");
+    });
+}
+
 
 function signOut(){
-        localStorage.clear();
-        window.location.replace('login.html')
+    event.preventDefault();
+    var data = {};
+    data['username'] = localStorage.username;
+    var a = $("#Save_bookmark").children();
+    data['htmlContent'] = a.html();
+    console.log(data['htmlContent']);
+
+    client.connect(function(err, client){
+        if(err)
+            throw err;
+        const db = client.db(dbName);
+        const userCollection = db.collection('bookmark');
+        // userCollection.save({'username':data['username'],'bookmark_contents':data['htmlContent']});
+        userCollection.update({'username':data['username']},{$set:{'bookmark_contents':data['htmlContent']}},{ upsert: true});
+        console.log("Update complete");
+    });
+    localStorage.clear();
+    window.location.replace('login.html')
 }
+
 $(document).ready(function(){
     var data = {};
     data['username'] = localStorage.username;
