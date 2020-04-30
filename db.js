@@ -7,12 +7,17 @@ const url = "mongodb+srv://yatharth:<password>@cluster0-p0dyy.mongodb.net/test?r
 const dbName = 'bookmarker';
 const client = new MongoClient(url);
 
-// function readyFunction(){
-//     if(localStorage.username)
-//         window.location.replace("index.html");
-// };
-// readyFunction();
+function readyFunction(){
+    if(localStorage.length == 0)
+        window.location.replace("login.html");
+};
+readyFunction();
 
+
+function signOut(){
+        localStorage.clear();
+        window.location.replace('login.html')
+}
 $(document).ready(function(){
     var data = {};
     data['username'] = localStorage.username;
@@ -31,7 +36,7 @@ $(document).ready(function(){
 
     $("#Save_bookmark").on( "submit", function( event ) {
         event.preventDefault();
-        
+
         var a = $("#Save_bookmark").children();
         data['htmlContent'] = a.html();
         console.log(data['htmlContent']);

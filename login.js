@@ -3,7 +3,7 @@ require('popper.js');
 require('bootstrap');
 const bcrypt = require('bcryptjs');
 const MongoClient = require('mongodb').MongoClient;
-const url = 'mongodb+srv://yatharth:yatharth@123@cluster0-p0dyy.mongodb.net/test?retryWrites=true&w=majority';
+const url = 'mongodb+srv://yatharth:<password>@cluster0-p0dyy.mongodb.net/test?retryWrites=true&w=majority';
 const dbName = 'bookmarker';
 const client = new MongoClient(url);
 
