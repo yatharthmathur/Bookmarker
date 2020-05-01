@@ -1,23 +1,12 @@
-
-	function check_links(){
-		$('li').each(function(){
-			var str = $(this).html();
-			// Set the regex string
-			var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig;
-			// Replace plain text links by hyperlinks
-			var replaced_text = str.replace(regex, `<a href='$1' target='_blank'>$1</a>`);
-			$(this).html(replaced_text);
-		});	
+	// Adding Hyperlinks for Bookmarks with links
+	function check_links(str) {
+		var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig;
+		// Replace plain text links by hyperlinks
+		var replaced_text = str.replace(regex, "<a href='$1' id='link' target='_blank'>$1</a>");
+		return(replaced_text);
 	}
-
-	async function asyncCall() {
-		console.log('perform link detection');
-		const result = await check_links();
-		// expected output: 'resolved'
-	  }
-	
+	// Adds new list to the HTML page under the id add_bookmark
 	function addNewList(){
-		// var new_bookmark_name = prompt("Enter The new bookmark name:");
 		if($("#new_list_name").val()==""){
 			console.log($("#new_list_name").val());
 		}
@@ -40,22 +29,24 @@
 		$("#new_list_name").val("");
 	}
 
+	//function to run the add new list funtion when button is clicked
 	$("#new_bookmark").click(function(){
 		addNewList();
 	});
 
+	//function to run the add new list funtion when enter is pressed
 	$("#new_list_name").keypress(function(e){
 		if(e.which == 13){
 			addNewList();
 		}
 	});
 
-	
+	//to add the done style to the todo
 	$("section").on("click", "li", function(){
 		$(this).toggleClass("completed");
 	});
 	
-	//Click on X to delete Todo
+	//To delete a Todo
 	$("section").on("click", "span", function(event){
 		$(this).parent().fadeOut(500,function(){
 			$(this).remove();
@@ -63,7 +54,7 @@
 		event.stopPropagation();
 	});
 
-	//Click on X to delete Todo Big list
+	//To delete entire Todo list
 	$("section").on("click", "h4 span", function(event){
 		$(this).parent().parent().parent().fadeOut(500,function(){
 			$(this).remove();
@@ -71,14 +62,16 @@
 		event.stopPropagation();
 	});
 
+	//adds a new todo tothe list
 	$("section").on("keypress","input",function(e){
 		if (e.which ==13){
 			var new_todo = ($(this).val());
+			new_todo = check_links(new_todo);
 			$(this).val("");
 			var list_name = $(this).parent().parent().attr("id")+"_list";
 			$(`section #${list_name}`).append(`<li><span><img src="assets/images/trash.png" alt=""></span>${new_todo}</li>`);
 		}
-		asyncCall();
+		//to check for links and make them hyperlinks
 	});
 	
 	
