@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <head>
+	<title>Todo List</title>
+
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script>
+	<link rel="stylesheet" type="text/css" href="assets/css/todos.css">
+	<script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+	<script type="text/javascript" src="assets/js/lib/jquery-2.1.4.min.js"></script>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<script type="text/javascript" src="db.js"></script>
+	<script>
         window.$ = window.jquery = require('jquery');
         require('bootstrap');
+		const shell = require('electron').shell;
 
-        function readyFunction(){
-            if(localStorage.length == 0)
-                window.location.replace('login.html')
-        }
-        readyFunction();
+		// assuming $ is jQuery
+		$(document).on('click', 'a[href^="http"]', function(event) {
+			event.preventDefault();
+			shell.openExternal(this.href);
+		});
+		
         $(document).ready(function(){
             $('#link').on('click', function(){
                 console.log('click');
@@ -17,12 +26,72 @@
                 shell.openExternal('http://www.google.com/')
             });
         });
-        
     </script>
 </head>
 <body>
-    <div class='container'>
-        <div id='link' class='jumbotron'>Hello World!</div>
-    </div>
+    <!-- NAV BAR -->
+	<!-- Image and text -->
+	<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+		<a class="navbar-brand" href="#">
+		<img src="assets/images/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+		BookMarker
+		</a>
+		<button class="btn btn-outline-success my-2 my-sm-0" type="" onclick="signOut()">Logout <i class="fas fa-sign-out-alt"></i></button>
+	</nav>
+	<!-- NAV BAR -->
+	<br>
+	
+
+	<section>
+	<form>
+	<!-- ADD CARD TO BODY BUTTON-->
+		<div class="container" >
+			<div id="new_list_button">
+				<input class="card text-center" type="text" placeholder="Enter name of new list" id="new_list_name" required>
+			</div>
+				<br>
+			<div class="card border-primary text-center" >
+				<button id="new_bookmark" type="submit" class="btn btn-outline-primary text-center">Add new list <i class="fa fa-plus-circle" aria-hidden="true"></i>
+				</button>
+			</div>
+		</div>
+	<!-- ADD CARD TO BODY BUTTON -->
+	<br>
+	</form>
+	</section>
+	<!-- ADD CARD TO BODY -->
+	<form name="login" id='Save_bookmark' method='POST' class="container ">
+	<section>
+		<div id="add_bookmark" class="card-columns">
+			<!-- CUSTOM MADE BOOKMARKER -->
+			<!-- <h2 class="container opacity_property jumbotron">Custom Made Bookmarkers</h2>
+			<div class="container">
+				<div class="card border-primary opacity_property mb-3 " id="custom">
+					<div class="card-header">
+						<h4><span><img src="assets/images/trash.png" alt=""></span>Bookmarks</h4>
+					</div>
+					<div class="card-body text-dark" id="dynamic">
+						<ul id="custom_list"></ul>
+					</div>
+					<div class="card-footer bg-transparent border-dark">
+						<input type="text" placeholder="Add New Todo">
+					</div>
+				</div>
+			</div> -->
+			<!-- CUSTOM MADE BOOKMARKER -->
+		</div>
+
+	</section>
+	<!-- ADD CARD TO BODY  -->
+	<!-- Save button -->
+	<div class="card border-primary text-center" >
+		<button id="form_save_bookmark" type="submit" class="btn btn-outline-primary">Save <i class="fa fa-hdd" aria-hidden="true"></i>
+		</button>
+	</div>
+		
+	</form>
+	<!-- Save button -->
+
+<script type="text/javascript" src="assets/js/todos.js"></script>
 </body>
 </html>
