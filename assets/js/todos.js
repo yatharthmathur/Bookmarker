@@ -1,34 +1,25 @@
-	$("#new_bookmark").click(function(){
+	function addNewList(){
 		// var new_bookmark_name = prompt("Enter The new bookmark name:");
 		if($("#new_list_name").val()==""){
 			console.log($("#new_list_name").val());
-			$("#new_list_name").addClass("border-danger");
 		}
 		else{
 			var new_bookmark_name = $("#new_list_name").val();
 			var v = new_bookmark_name.replace(/\s/g, '');
 			console.log($("#new_list_name").val());
-			$("#add_bookmark").append(`<div class="card border-dark mb-3" id="${v}" style="max-width: 18rem;"><div class="card-header"><h4><span><img src="assets/images/trash.png" alt=""></span>${new_bookmark_name}</h4></button>
+			$("#add_bookmark").append(`<div class="card border-primary opacity_property mb-3" id="${v}" style="max-width: 18rem;"><div class="card-header"><h4><span><img src="assets/images/trash.png" alt=""></span>${new_bookmark_name}</h4></button>
 			</div><div class="card-body text-dark" id="dynamic"><ul id="${v}_list"></ul></div><div class="card-footer bg-transparent border-dark"><input type="text" placeholder="Add New Todo"></div></div>`);
 		}
 		$("#new_list_name").val("");
-		$("#new_list_name").removeClass("border-danger");
+	}
 
+	$("#new_bookmark").click(function(){
+		addNewList();
 	});
 
 	$("#new_list_name").keypress(function(e){
 		if(e.which == 13){
-				// var new_bookmark_name = prompt("Enter The new bookmark name:");
-			if($("#new_list_name").val()==""){
-				console.log($("#new_list_name").val());
-			}
-			else{
-				var new_bookmark_name = $("#new_list_name").val();
-				var v = new_bookmark_name.replace(/\s/g, '');
-				console.log($("#new_list_name").val());
-				$("#add_bookmark").append(`<div class="card border-dark" id="${v}"><div class="card-header"><h4><span><img src="assets/images/trash.png" alt=""></span>${new_bookmark_name}</h4></button></div><div class="card-body text-dark" id="dynamic"><ul id="${v}_list"></ul></div><div class="card-footer bg-transparent border-dark"><input type="text" placeholder="Add New Todo"></div></div>`);
-			}
-			$("#new_list_name").val("")
+			addNewList();
 		}
 	});
 	

@@ -1,10 +1,7 @@
 body {
 	font-family: Roboto;
-  background: -webkit-linear-gradient(90deg, #2BC0E4 10%, #EAECC6 90%); /* Chrome 10+, Saf5.1+ */
-  background:    -moz-linear-gradient(90deg, #2BC0E4 10%, #EAECC6 90%); /* FF3.6+ */
-  background:     -ms-linear-gradient(90deg, #2BC0E4 10%, #EAECC6 90%); /* IE10 */
-  background:      -o-linear-gradient(90deg, #2BC0E4 10%, #EAECC6 90%); /* Opera 11.10+ */
-  background:         linear-gradient(90deg, #2BC0E4 10%, #EAECC6 90%); /* W3C */
+	background: rgb(238,174,202);
+background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
 }
 
 ul {
@@ -13,16 +10,6 @@ ul {
 	padding: 0;
 }
 
-
-h1 {
-	background: #2980b9;
-	color: white;
-	margin: 0;
-	padding: 10px 20px;
-	text-transform: uppercase;
-	font-size: 24px;
-	font-weight: normal;
-}
 
 .fa-plus {
 	float: right;
@@ -105,11 +92,6 @@ input:focus{
 	color: #2980b9;
 }
 
-.card-columns {
-	@include media-breakpoint-only(lg) {
-	  column-count: 4;
-	}
-	@include media-breakpoint-only(xl) {
-	  column-count: 5;
-	}
-  }
+.opacity_property {
+	background-color: rgb(248, 242, 242, 0.5) !important;
+}
