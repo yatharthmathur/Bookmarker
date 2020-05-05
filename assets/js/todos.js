@@ -2,7 +2,6 @@
 	// Adding Hyperlinks for Bookmarks with links
 	function check_links(str) {
 		var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig;
-		// Replace plain text links by hyperlinks
 		var replaced_text = str.replace(regex, "<a href='$1' id='link' target='_blank'>$1</a>");
 		return(replaced_text);
 	}
@@ -17,7 +16,7 @@
 			console.log($("#new_list_name").val());
 			$("#add_bookmark").append(`<div class="card border-primary opacity_property mb-3 col-xs-6" id="${v}">
 											<div class="card-header">
-												<h4><span><img src="assets/images/trash.png" alt=""></span>${new_bookmark_name}</h4>
+												<h4><span><i class="fa fa-trash" aria-hidden="true"></i></span>${new_bookmark_name}</h4>
 											</div>
 											<div class="card-body text-dark" id="dynamic">
 												<ul id="${v}_list"></ul>
@@ -76,7 +75,8 @@
 			new_todo = check_links(new_todo);
 			$(this).val("");
 			var list_name = $(this).parent().parent().attr("id")+"_list";
-			$(`section #${list_name}`).append(`<li><span><img src="assets/images/trash.png" alt=""></span>${new_todo}</li>`);
+			$(`section #${list_name}`).append(`<li><span><i class="fa fa-trash" aria-hidden="true"></i></span>${new_todo}</li>`);
+			resultset();
 		}
 		//to check for links and make them hyperlinks
 	});
