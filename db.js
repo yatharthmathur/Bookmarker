@@ -35,15 +35,29 @@ function resultset(){
     // console.log(child);
     $('#add_bookmark').children('div').each(function(){
         var nameoflist = $(this).attr('id');
+
         var bk = [];
         var a = $(this).children('.card-header');
         var b = a.children('h4').text();
         var v = $(this).children(`#dynamic`);
         var w = v.children(`#${nameoflist}_list`);
         w.children('li').each(function(){
-            bk.push({
-                'values':$(this).text()
-            });
+            if($(this).attr("class")=='completed')
+            {
+                console.log("complete function triggered")
+                bk.push({
+                    'values':$(this).text(),
+                    'done':'completed'
+                });
+            }
+            else
+            {
+                bk.push({
+                    'values':$(this).text(),
+                    'done':'uncompleted'
+                });
+            }
+            
         })
         data.push({
                 'actualHeader' : b,
@@ -93,7 +107,7 @@ function resultget(){
                     console.log(item['values']);
                     new_todo = check_links(item.values);
                     var list_name = headerName+"_list";
-			        $(`section #${list_name}`).append(`<li><span><i class="fa fa-trash" aria-hidden="true"></i></span>${new_todo}</li>`);
+			        $(`section #${list_name}`).append(`<li class="${item.done}"><span><i class="fa fa-trash" aria-hidden="true"></i></span>${new_todo}<p class="close"><i class="fa fa-check" aria-hidden="true"></i></p></li>`);
                 });
             })
             // $("#add_bookmark").html(result.bookmark_contents);
