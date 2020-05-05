@@ -13,6 +13,7 @@ function readyFunction(){
 };
 readyFunction();
 
+// Clears the DB for fresh creation
 function cleardb(){
     var data = {};
     data['username'] = localStorage.username;

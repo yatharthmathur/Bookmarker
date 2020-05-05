@@ -20,6 +20,10 @@ li {
 	height: 40px;
 	line-height: 40px;
 	color: #666;
+	list-style-position:inside;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;    
 }
 
 li:nth-child(2n){
@@ -36,6 +40,7 @@ li span {
 	display: inline-block;
 	transition: 0.2s linear;
 	opacity: 0;
+	list-style-position: inside;   
 }
 
 li:hover span {

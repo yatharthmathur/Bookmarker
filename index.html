@@ -11,12 +11,14 @@
 	<script>
         window.$ = window.jquery = require('jquery');
         require('bootstrap');
+		const shell = require('electron').shell;
 
-        // function readyFunction(){
-        //     if(localStorage.length == 0)
-        //         window.location.replace('login.html')
-        // }
-        // readyFunction();
+		// opens hyperlink in new tab
+		$(document).on('click', 'a[href^="http"]', function(event) {
+			event.preventDefault();
+			shell.openExternal(this.href);
+		});
+		
         $(document).ready(function(){
             $('#link').on('click', function(){
                 console.log('click');
@@ -38,10 +40,12 @@
 	</nav>
 	<!-- NAV BAR -->
 	<br>
-	<!-- ADD CARD TO BODY BUTTON-->
+	
+
 	<section>
+	<form>
+	<!-- ADD CARD TO BODY BUTTON-->
 		<div class="container" >
-		<form>
 			<div id="new_list_button">
 				<input class="card text-center" type="text" placeholder="Enter name of new list" id="new_list_name" required>
 			</div>
@@ -50,20 +54,35 @@
 				<button id="new_bookmark" type="submit" class="btn btn-outline-primary text-center">Add new list <i class="fa fa-plus-circle" aria-hidden="true"></i>
 				</button>
 			</div>
-		</form>
 		</div>
-	</section>
 	<!-- ADD CARD TO BODY BUTTON -->
 	<br>
+	</form>
+	</section>
 	<!-- ADD CARD TO BODY -->
 	<form name="login" id='Save_bookmark' method='POST' class="container ">
 	<section>
 		<div id="add_bookmark" class="card-columns">
-
+			<!-- CUSTOM MADE BOOKMARKER -->
+			<!-- <h2 class="container opacity_property jumbotron">Custom Made Bookmarkers</h2>
+			<div class="container">
+				<div class="card border-primary opacity_property mb-3 " id="custom">
+					<div class="card-header">
+						<h4><span><img src="assets/images/trash.png" alt=""></span>Bookmarks</h4>
+					</div>
+					<div class="card-body text-dark" id="dynamic">
+						<ul id="custom_list"></ul>
+					</div>
+					<div class="card-footer bg-transparent border-dark">
+						<input type="text" placeholder="Add New Todo">
+					</div>
+				</div>
+			</div> -->
+			<!-- CUSTOM MADE BOOKMARKER -->
 		</div>
+
 	</section>
 	<!-- ADD CARD TO BODY  -->
-	<br>
 	<!-- Save button -->
 	<div class="card border-primary text-center" >
 		<button id="form_save_bookmark" type="submit" class="btn btn-outline-primary">Save <i class="fa fa-hdd" aria-hidden="true"></i>
