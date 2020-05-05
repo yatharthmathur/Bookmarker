@@ -1,3 +1,4 @@
+
 	// Adding Hyperlinks for Bookmarks with links
 	function check_links(str) {
 		var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig;
@@ -29,10 +30,12 @@
 		$("#new_list_name").val("");
 	}
 
+
 	//function to run the add new list funtion when button is clicked
 	$("#new_bookmark").click(function(){
 		addNewList();
 	});
+
 
 	//function to run the add new list funtion when enter is pressed
 	$("#new_list_name").keypress(function(e){
@@ -41,11 +44,13 @@
 		}
 	});
 
+
 	//to add the done style to the todo
 	$("section").on("click", "li", function(){
 		$(this).toggleClass("completed");
 	});
 	
+
 	//To delete a Todo
 	$("section").on("click", "span", function(event){
 		$(this).parent().fadeOut(500,function(){
@@ -54,6 +59,7 @@
 		event.stopPropagation();
 	});
 
+
 	//To delete entire Todo list
 	$("section").on("click", "h4 span", function(event){
 		$(this).parent().parent().parent().fadeOut(500,function(){
@@ -61,6 +67,7 @@
 		});
 		event.stopPropagation();
 	});
+
 
 	//adds a new todo tothe list
 	$("section").on("keypress","input",function(e){
