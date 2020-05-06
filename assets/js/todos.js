@@ -2,8 +2,7 @@
 	// Adding Hyperlinks for Bookmarks with links
 	function check_links(str) {
 		var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig;
-		// Replace plain text links by hyperlinks
-		var replaced_text = str.replace(regex, "<a href='$1' id='link' target='_blank'>$1</a>");
+		var replaced_text = str.replace(regex, `<a href='$1' id='link' target='_blank'>$1</a>`);
 		return(replaced_text);
 	}
 	// Adds new list to the HTML page under the id add_bookmark
@@ -17,7 +16,7 @@
 			console.log($("#new_list_name").val());
 			$("#add_bookmark").append(`<div class="card border-primary opacity_property mb-3 col-xs-6" id="${v}">
 											<div class="card-header">
-												<h4><span><img src="assets/images/trash.png" alt=""></span>${new_bookmark_name}</h4>
+												<h4><span><i class="fa fa-trash" aria-hidden="true"></i></span>${new_bookmark_name}</h4>
 											</div>
 											<div class="card-body text-dark" id="dynamic">
 												<ul id="${v}_list"></ul>
@@ -30,7 +29,9 @@
 		$("#new_list_name").val("");
 	}
 
-
+	function expand(){
+		$("#add_bookmark").toggleClass("card-columns");
+	}
 	//function to run the add new list funtion when button is clicked
 	$("#new_bookmark").click(function(){
 		addNewList();
@@ -46,8 +47,9 @@
 
 
 	//to add the done style to the todo
-	$("section").on("click", "li", function(){
-		$(this).toggleClass("completed");
+	$("section").on("click", "p", function(){
+		$(this).parent().removeClass("uncompleted");
+		$(this).parent().toggleClass("completed");
 	});
 	
 
@@ -76,10 +78,12 @@
 			new_todo = check_links(new_todo);
 			$(this).val("");
 			var list_name = $(this).parent().parent().attr("id")+"_list";
-			$(`section #${list_name}`).append(`<li><span><img src="assets/images/trash.png" alt=""></span>${new_todo}</li>`);
+			$(`section #${list_name}`).append(`<li id="scratch"><span><i class="fa fa-trash" aria-hidden="true"></i></span>${new_todo}<p class="shift-right close"><i class="fa fa-check" aria-hidden="true"></i></p></li>`);
+			resultset();
 		}
 		//to check for links and make them hyperlinks
 	});
+	
 	
 	
 

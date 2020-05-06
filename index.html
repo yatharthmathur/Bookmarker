@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <head>
 	<title>Todo List</title>
-
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="assets/css/todos.css">
 	<script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
@@ -36,6 +35,8 @@
 		<img src="assets/images/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
 		BookMarker
 		</a>
+		<button class="btn btn-outline-dark ml-auto" type="" onclick="expand()">Expand <i class="fa fa-expand" aria-hidden="true"></i></button>
+		<button class="btn btn-outline-primary ml-auto" type="" onclick="resultset()">Save <i class="fa fa-hdd" aria-hidden="true"></i></button>
 		<button class="btn btn-outline-success my-2 my-sm-0" type="" onclick="signOut()">Logout <i class="fas fa-sign-out-alt"></i></button>
 	</nav>
 	<!-- NAV BAR -->
@@ -47,7 +48,7 @@
 	<!-- ADD CARD TO BODY BUTTON-->
 		<div class="container" >
 			<div id="new_list_button">
-				<input class="card text-center" type="text" placeholder="Enter name of new list" id="new_list_name" required>
+				<input class="card text-center form-control" type="text" placeholder="Enter name of new list" id="new_list_name" required>
 			</div>
 				<br>
 			<div class="card border-primary text-center" >
@@ -81,16 +82,8 @@
 			<!-- CUSTOM MADE BOOKMARKER -->
 		</div>
 
-	</section>
-	<!-- ADD CARD TO BODY  -->
-	<!-- Save button -->
-	<div class="card border-primary text-center" >
-		<button id="form_save_bookmark" type="submit" class="btn btn-outline-primary">Save <i class="fa fa-hdd" aria-hidden="true"></i>
-		</button>
-	</div>
-		
+	</section>		
 	</form>
-	<!-- Save button -->
 
 <script type="text/javascript" src="assets/js/todos.js"></script>
 </body>

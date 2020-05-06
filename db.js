@@ -28,29 +28,56 @@ function cleardb(){
     });
 }
 
-
-function signOut(){
-    event.preventDefault();
-    var data = {};
+function resultset(){
+    var data = [];
     data['username'] = localStorage.username;
-    data['htmlContent'] = $("#add_bookmark").html();
-    console.log(data['htmlContent']);
+    // var child = $("#add_bookmark  > div:eq(1) ").attr("id");
+    // console.log(child);
+    $('#add_bookmark').children('div').each(function(){
+        var nameoflist = $(this).attr('id');
 
-    client.connect(function(err, client){
+        var bk = [];
+        var a = $(this).children('.card-header');
+        var b = a.children('h4').text();
+        var v = $(this).children(`#dynamic`);
+        var w = v.children(`#${nameoflist}_list`);
+        w.children('li').each(function(){
+            if($(this).attr("class")=='completed')
+            {
+                console.log("complete function triggered")
+                bk.push({
+                    'values':$(this).text(),
+                    'done':'completed'
+                });
+            }
+            else
+            {
+                bk.push({
+                    'values':$(this).text(),
+                    'done':'uncompleted'
+                });
+            }
+            
+        })
+        data.push({
+                'actualHeader' : b,
+                'header' : nameoflist,
+                'header_list' : bk
+                    });
+      });
+      console.log(data);
+      client.connect(function(err, client){
         if(err)
             throw err;
         const db = client.db(dbName);
         const userCollection = db.collection('bookmark');
-        // userCollection.save({'username':data['username'],'bookmark_contents':data['htmlContent']});
-        userCollection.update({'username':data['username']},{$set:{'bookmark_contents':data['htmlContent']}},{ upsert: true});
+        userCollection.update({'username':data['username']},{$set:{data}},{ upsert: true});
         console.log("Update complete");
     });
-    localStorage.clear();
-    window.location.replace('login.html')
 }
 
-$(document).ready(function(){
-    var data = {};
+function resultget(){
+    var data = [];
     data['username'] = localStorage.username;
     client.connect(function(err, client){
         if(err)
@@ -59,26 +86,87 @@ $(document).ready(function(){
         const userCollection = db.collection('bookmark');
         userCollection.findOne({'username':data['username']},function(err,result){
             if(err) throw err;
-            console.log(result.bookmark_contents);
-            $("#add_bookmark").html(result.bookmark_contents);
+            var data = result['data']
+            console.log(data);
+            data.forEach(function(item,index){
+                console.log(item['actualHeader']);
+                console.log(item['header']);
+                var headerName = item['header'];
+                $("#add_bookmark").append(`<div class="card border-primary opacity_property mb-3 col-xs-6" id="${headerName}">
+											<div class="card-header">
+												<h4><span><i class="fa fa-trash" aria-hidden="true"></i></span>${item.actualHeader}</h4>
+											</div>
+											<div class="card-body text-dark" id="dynamic">
+												<ul id="${headerName}_list"></ul>
+											</div>
+											<div class="card-footer bg-transparent border-dark">
+												<input type="text" placeholder="Add New Todo">
+											</div>
+                                        </div>`);
+                item['header_list'].forEach(function(item,index){
+                    console.log(item['values']);
+                    new_todo = check_links(item.values);
+                    var list_name = headerName+"_list";
+			        $(`section #${list_name}`).append(`<li class="${item.done}"><span><i class="fa fa-trash" aria-hidden="true"></i></span>${new_todo}<p class="close"><i class="fa fa-check" aria-hidden="true"></i></p></li>`);
+                });
+            })
+            // $("#add_bookmark").html(result.bookmark_contents);
         });
 
     });
+}
+
+function signOut(){
+    event.preventDefault();
+    var data = {};
+    data['username'] = localStorage.username;
+    // data['htmlContent'] = $("#add_bookmark").html();
+    // console.log(data['htmlContent']);
+
+    // client.connect(function(err, client){
+    //     if(err)
+    //         throw err;
+    //     const db = client.db(dbName);
+    //     const userCollection = db.collection('bookmark');
+    //     // userCollection.save({'username':data['username'],'bookmark_contents':data['htmlContent']});
+    //     userCollection.update({'username':data['username']},{$set:{'bookmark_contents':data['htmlContent']}},{ upsert: true});
+    //     console.log("Update complete");
+    // });
+    resultset();
+    localStorage.clear();
+    window.location.replace('login.html')
+}
+
+$(document).ready(function(){
+    var data = {};
+    data['username'] = localStorage.username;
+    // client.connect(function(err, client){
+    //     if(err)
+    //         throw err;
+    //     const db = client.db(dbName);
+    //     const userCollection = db.collection('bookmark');
+    //     userCollection.findOne({'username':data['username']},function(err,result){
+    //         if(err) throw err;
+    //         // console.log(result.bookmark_contents);
+    //         $("#add_bookmark").html(result.bookmark_contents);
+    //     });
+
+    // });
+    resultget();
 
     $("#Save_bookmark").on( "submit", function( event ) {
         event.preventDefault();
-        data['htmlContent'] = $("#add_bookmark").html();
-        console.log(data['htmlContent']);
+       
+        resultset();
 
-
-        client.connect(function(err, client){
-            if(err)
-                throw err;
-            const db = client.db(dbName);
-            const userCollection = db.collection('bookmark');
-            // userCollection.save({'username':data['username'],'bookmark_contents':data['htmlContent']});
-            userCollection.update({'username':data['username']},{$set:{'bookmark_contents':data['htmlContent']}},{ upsert: true});
-            console.log("Update complete");
-        });
+        // client.connect(function(err, client){
+        //     if(err)
+        //         throw err;
+        //     const db = client.db(dbName);
+        //     const userCollection = db.collection('bookmark');
+        //     // userCollection.save({'username':data['username'],'bookmark_contents':data['htmlContent']});
+        //     userCollection.update({'username':data['username']},{$set:{'bookmark_contents':data['htmlContent']}},{ upsert: true});
+        //     console.log("Update complete");
+        // });
     });
 });
