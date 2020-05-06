@@ -20,7 +20,7 @@ function createWindow () {
   })
 
   // and load the index.html of the app.
-  loginWindow.loadFile('login.html')
+  loginWindow.loadFile('./assets/views/login.html')
 
   // Open the DevTools.
   loginWindow.webContents.openDevTools()
