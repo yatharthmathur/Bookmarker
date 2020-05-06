@@ -1,10 +1,10 @@
 window.$ = window.jquery = require('jquery');
-	// Adding Hyperlinks for Bookmarks with links
-	function replace_links(str, title) {
+	// Adding Hyperlinks for Bookmarks with links and getting the icon for the same
+	function replaceLinks(str, title) {
 		var regex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
 		console.log('##', title);
-		var replaced_text = str.replace(regex, `<a href='$1' id='link' target='_blank'><img height="16" width="16" src='https://api.statvoo.com/favicon/?url=${str}'> ${title}</a>`);
-		return(replaced_text);
+		var replacedText = str.replace(regex, `<a href='$1' id='link' target='_blank'><img height="16" width="16" src='https://api.statvoo.com/favicon/?url=${str}'> ${title}</a>`);
+		return(replacedText);
 	}
 
 
@@ -110,7 +110,7 @@ window.$ = window.jquery = require('jquery');
 			if(validURL(new_todo)){
 				var title = getTitle(new_todo);
 				console.log('#', title);
-				new_todo = replace_links(new_todo, title);
+				new_todo = replaceLinks(new_todo, title);
 			}
 			
 			$(this).val("");

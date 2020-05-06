@@ -1,3 +1,4 @@
+//necessary imports
 window.$ = window.jquery = require('jquery');
 require('popper.js');
 require('bootstrap');
@@ -7,11 +8,14 @@ const url = 'mongodb+srv://yatharth:yatharth@123@cluster0-p0dyy.mongodb.net/test
 const dbName = 'bookmarker';
 const client = new MongoClient(url);
 
+//ready function to check for login state
 function readyFunction(){
     if(localStorage.username)
         window.location.replace("index.html");
 };
 readyFunction();
+
+//Handling events in document.ready method
 $(document).ready(function(){
     $( "#loginForm" ).on( "submit", function( event ) {
         event.preventDefault();

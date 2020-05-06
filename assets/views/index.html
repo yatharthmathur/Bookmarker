@@ -11,19 +11,11 @@
         require('bootstrap');
 		const shell = require('electron').shell;
 
-		// opens hyperlink in new tab
+		// opens hyperlink in default browser of the operating system.
 		$(document).on('click', 'a[href^="http"]', function(event) {
 			event.preventDefault();
 			shell.openExternal(this.href);
 		});
-		
-        // $(document).ready(function(){
-        //     $('#link').on('click', function(){
-        //         console.log('click');
-        //         var shell = require('electron').shell;
-        //         shell.openExternal('http://www.google.com/')
-        //     });
-        // });
     </script>
 </head>
 <body>
@@ -63,22 +55,6 @@
 	<form name="login" id='Save_bookmark' method='POST' class="container ">
 	<section>
 		<div id="add_bookmark" class="card-columns">
-			<!-- CUSTOM MADE BOOKMARKER -->
-			<!-- <h2 class="container opacity_property jumbotron">Custom Made Bookmarkers</h2>
-			<div class="container">
-				<div class="card border-primary opacity_property mb-3 " id="custom">
-					<div class="card-header">
-						<h4><span><img src="assets/images/trash.png" alt=""></span>Bookmarks</h4>
-					</div>
-					<div class="card-body text-dark" id="dynamic">
-						<ul id="custom_list"></ul>
-					</div>
-					<div class="card-footer bg-transparent border-dark">
-						<input type="text" placeholder="Add New Todo">
-					</div>
-				</div>
-			</div> -->
-			<!-- CUSTOM MADE BOOKMARKER -->
 		</div>
 
 	</section>		
