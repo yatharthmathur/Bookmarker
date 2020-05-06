@@ -2,29 +2,20 @@
 <head>
 	<title>Todo List</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="assets/css/todos.css">
+	<link rel="stylesheet" type="text/css" href="../css/todos.css">
 	<script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
-	<script type="text/javascript" src="assets/js/lib/jquery-2.1.4.min.js"></script>
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-	<script type="text/javascript" src="db.js"></script>
+	<script type="text/javascript" src="../js/db.js"></script>
 	<script>
         window.$ = window.jquery = require('jquery');
         require('bootstrap');
 		const shell = require('electron').shell;
 
-		// opens hyperlink in new tab
+		// opens hyperlink in default browser of the operating system.
 		$(document).on('click', 'a[href^="http"]', function(event) {
 			event.preventDefault();
 			shell.openExternal(this.href);
 		});
-		
-        $(document).ready(function(){
-            $('#link').on('click', function(){
-                console.log('click');
-                var shell = require('electron').shell;
-                shell.openExternal('http://www.google.com/')
-            });
-        });
     </script>
 </head>
 <body>
@@ -32,11 +23,11 @@
 	<!-- Image and text -->
 	<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
 		<a class="navbar-brand" href="#">
-		<img src="assets/images/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+		<img src="../images/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
 		BookMarker
 		</a>
 		<button class="btn btn-outline-dark ml-auto" type="" onclick="expand()">Expand <i class="fa fa-expand" aria-hidden="true"></i></button>
-		<button class="btn btn-outline-primary ml-auto" type="" onclick="resultset()">Save <i class="fa fa-hdd" aria-hidden="true"></i></button>
+		<button class="btn btn-outline-primary ml-auto" type="" onclick="updateDB()">Save <i class="fa fa-hdd" aria-hidden="true"></i></button>
 		<button class="btn btn-outline-success my-2 my-sm-0" type="" onclick="signOut()">Logout <i class="fas fa-sign-out-alt"></i></button>
 	</nav>
 	<!-- NAV BAR -->
@@ -64,27 +55,11 @@
 	<form name="login" id='Save_bookmark' method='POST' class="container ">
 	<section>
 		<div id="add_bookmark" class="card-columns">
-			<!-- CUSTOM MADE BOOKMARKER -->
-			<!-- <h2 class="container opacity_property jumbotron">Custom Made Bookmarkers</h2>
-			<div class="container">
-				<div class="card border-primary opacity_property mb-3 " id="custom">
-					<div class="card-header">
-						<h4><span><img src="assets/images/trash.png" alt=""></span>Bookmarks</h4>
-					</div>
-					<div class="card-body text-dark" id="dynamic">
-						<ul id="custom_list"></ul>
-					</div>
-					<div class="card-footer bg-transparent border-dark">
-						<input type="text" placeholder="Add New Todo">
-					</div>
-				</div>
-			</div> -->
-			<!-- CUSTOM MADE BOOKMARKER -->
 		</div>
 
 	</section>		
 	</form>
 
-<script type="text/javascript" src="assets/js/todos.js"></script>
+<script type="text/javascript" src="../js/todos.js"></script>
 </body>
 </html>

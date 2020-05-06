@@ -1,3 +1,4 @@
+//Necessary imports
 window.$ = window.jquery = require('jquery');
 require('popper.js');
 require('bootstrap');
@@ -7,6 +8,7 @@ const url = "mongodb+srv://yatharth:yatharth@123@cluster0-p0dyy.mongodb.net/test
 const dbName = 'bookmarker';
 const client = new MongoClient(url);
 
+//login check
 function readyFunction(){
     if(localStorage.length == 0)
         window.location.replace("login.html");
@@ -14,7 +16,7 @@ function readyFunction(){
 readyFunction();
 
 // Clears the DB for fresh creation
-function cleardb(){
+function clearDB(){
     var data = {};
     data['username'] = localStorage.username;
     client.connect(function(err, client){
@@ -22,25 +24,25 @@ function cleardb(){
             throw err;
         const db = client.db(dbName);
         const userCollection = db.collection('bookmark');
-        // userCollection.save({'username':data['username'],'bookmark_contents':data['htmlContent']});
         userCollection.remove({'username':data['username']});
         console.log("Deletion complete");
     });
 }
 
-function resultset(){
+//Update database with current state in the application
+function updateDB(){
     var data = [];
     data['username'] = localStorage.username;
-    // var child = $("#add_bookmark  > div:eq(1) ").attr("id");
-    // console.log(child);
     $('#add_bookmark').children('div').each(function(){
         var nameoflist = $(this).attr('id');
 
         var bk = [];
+        //traversing DOM for the list elements
         var a = $(this).children('.card-header');
         var b = a.children('h4').text();
         var v = $(this).children(`#dynamic`);
         var w = v.children(`#${nameoflist}_list`);
+        //for each list element check whether it is a URI or plaintext and push it in the database accordingly.
         w.children('li').each(function(){
             console.log($(this).children());
             let values;
@@ -51,6 +53,8 @@ function resultset(){
             else{
                 values = $(this).text();
             }
+
+            //Check for strikethrough if completed todo
             if($(this).attr("class")=='completed')
             {
                 console.log("complete function triggered")
@@ -75,7 +79,6 @@ function resultset(){
                 'header_list' : bk
                     });
       });
-      //console.log(data);
       client.connect(function(err, client){
         if(err)
             throw err;
@@ -86,7 +89,8 @@ function resultset(){
     });
 }
 
-function resultget(){
+//To extract data from database to update current state of application
+function queryDB(){
     var data = [];
     data['username'] = localStorage.username;
     client.connect(function(err, client){
@@ -120,63 +124,31 @@ function resultget(){
 			        $(`section #${list_name}`).append(`<li class="${item.done}"><span><i class="fa fa-trash" aria-hidden="true"></i></span>${item.values}<p class="close"><i class="fa fa-check" aria-hidden="true"></i></p></li>`);
                 });
             })
-            // $("#add_bookmark").html(result.bookmark_contents);
         });
 
     });
 }
 
+
+//update everything in the database and sign out function
 function signOut(){
     event.preventDefault();
     var data = {};
     data['username'] = localStorage.username;
-    // data['htmlContent'] = $("#add_bookmark").html();
-    // console.log(data['htmlContent']);
-
-    // client.connect(function(err, client){
-    //     if(err)
-    //         throw err;
-    //     const db = client.db(dbName);
-    //     const userCollection = db.collection('bookmark');
-    //     // userCollection.save({'username':data['username'],'bookmark_contents':data['htmlContent']});
-    //     userCollection.update({'username':data['username']},{$set:{'bookmark_contents':data['htmlContent']}},{ upsert: true});
-    //     console.log("Update complete");
-    // });
-    resultset();
+    updateDB();
     localStorage.clear();
     window.location.replace('login.html')
 }
 
+//Handling remaining events.
 $(document).ready(function(){
     var data = {};
     data['username'] = localStorage.username;
-    // client.connect(function(err, client){
-    //     if(err)
-    //         throw err;
-    //     const db = client.db(dbName);
-    //     const userCollection = db.collection('bookmark');
-    //     userCollection.findOne({'username':data['username']},function(err,result){
-    //         if(err) throw err;
-    //         // console.log(result.bookmark_contents);
-    //         $("#add_bookmark").html(result.bookmark_contents);
-    //     });
-
-    // });
-    resultget();
+    queryDB();
 
     $("#Save_bookmark").on( "submit", function( event ) {
         event.preventDefault();
        
-        resultset();
-
-        // client.connect(function(err, client){
-        //     if(err)
-        //         throw err;
-        //     const db = client.db(dbName);
-        //     const userCollection = db.collection('bookmark');
-        //     // userCollection.save({'username':data['username'],'bookmark_contents':data['htmlContent']});
-        //     userCollection.update({'username':data['username']},{$set:{'bookmark_contents':data['htmlContent']}},{ upsert: true});
-        //     console.log("Update complete");
-        // });
+        updateDB();
     });
 });
