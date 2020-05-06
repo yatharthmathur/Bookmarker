@@ -1,9 +1,9 @@
-
+window.$ = window.jquery = require('jquery');
 	// Adding Hyperlinks for Bookmarks with links
 	function replace_links(str, title) {
-		var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig;
+		var regex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
 		console.log('##', title);
-		var replaced_text = str.replace(regex, `<a href='$1' id='link' target='_blank'>${title}</a>`);
+		var replaced_text = str.replace(regex, `<a href='$1' id='link' target='_blank'><img height="16" width="16" src='https://api.statvoo.com/favicon/?url=${str}'> ${title}</a>`);
 		return(replaced_text);
 	}
 
@@ -28,8 +28,15 @@
 			dataType:"TEXT"
 		}).responseText;
 		console.log(title);
-		return title;
+
+		if(title == "null value not allowed"){
+			return str
+		}
+		else{
+			return title;
+		}
 	}
+	
 	// Adds new list to the HTML page under the id add_bookmark
 	function addNewList(){
 		if($("#new_list_name").val()==""){
