@@ -1,19 +1,44 @@
 
 	// Adding Hyperlinks for Bookmarks with links
-	function check_links(str) {
+	function replace_links(str, title) {
 		var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig;
-		var replaced_text = str.replace(regex, `<a href='$1' id='link' target='_blank'>$1</a>`);
+		console.log('##', title);
+		var replaced_text = str.replace(regex, `<a href='$1' id='link' target='_blank'>${title}</a>`);
 		return(replaced_text);
+	}
+
+
+	//check valid url
+	function validURL(str) {
+		var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+		  '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+		  '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+		  '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+		  '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+		  '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+		return !!pattern.test(str);
+	  }
+	
+	//get link title
+	function getTitle(str){
+		var title = $.ajax({
+			async:false,
+			url: `http://textance.herokuapp.com/title/${str}`,
+			type:'get',
+			dataType:"TEXT"
+		}).responseText;
+		console.log(title);
+		return title;
 	}
 	// Adds new list to the HTML page under the id add_bookmark
 	function addNewList(){
 		if($("#new_list_name").val()==""){
-			console.log($("#new_list_name").val());
+			//console.log($("#new_list_name").val());
 		}
 		else{
 			var new_bookmark_name = $("#new_list_name").val();
 			var v = new_bookmark_name.replace(/\s/g, '');
-			console.log($("#new_list_name").val());
+			//console.log($("#new_list_name").val());
 			$("#add_bookmark").append(`<div class="card border-primary opacity_property mb-3 col-xs-6" id="${v}">
 											<div class="card-header">
 												<h4><span><i class="fa fa-trash" aria-hidden="true"></i></span>${new_bookmark_name}</h4>
@@ -75,11 +100,15 @@
 	$("section").on("keypress","input",function(e){
 		if (e.which ==13){
 			var new_todo = ($(this).val());
-			new_todo = check_links(new_todo);
+			if(validURL(new_todo)){
+				var title = getTitle(new_todo);
+				console.log('#', title);
+				new_todo = replace_links(new_todo, title);
+			}
+			
 			$(this).val("");
 			var list_name = $(this).parent().parent().attr("id")+"_list";
 			$(`section #${list_name}`).append(`<li id="scratch"><span><i class="fa fa-trash" aria-hidden="true"></i></span>${new_todo}<p class="shift-right close"><i class="fa fa-check" aria-hidden="true"></i></p></li>`);
-			resultset();
 		}
 		//to check for links and make them hyperlinks
 	});

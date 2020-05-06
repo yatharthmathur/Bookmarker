@@ -42,30 +42,40 @@ function resultset(){
         var v = $(this).children(`#dynamic`);
         var w = v.children(`#${nameoflist}_list`);
         w.children('li').each(function(){
+            console.log($(this).children());
+            let values;
+            if($(this).find('a').length!=0){
+                values = $(this).children()[1].outerHTML;
+                console.log(values);
+            }
+            else{
+                values = $(this).text();
+            }
             if($(this).attr("class")=='completed')
             {
                 console.log("complete function triggered")
                 bk.push({
-                    'values':$(this).text(),
+                    'values':values,
                     'done':'completed'
                 });
             }
             else
             {
                 bk.push({
-                    'values':$(this).text(),
+                    'values':values,
                     'done':'uncompleted'
                 });
             }
             
         })
+        console.log(bk);
         data.push({
                 'actualHeader' : b,
                 'header' : nameoflist,
                 'header_list' : bk
                     });
       });
-      console.log(data);
+      //console.log(data);
       client.connect(function(err, client){
         if(err)
             throw err;
@@ -104,10 +114,10 @@ function resultget(){
 											</div>
                                         </div>`);
                 item['header_list'].forEach(function(item,index){
-                    console.log(item['values']);
-                    new_todo = check_links(item.values);
+                    console.log(item);
+                    var new_todo = '';
                     var list_name = headerName+"_list";
-			        $(`section #${list_name}`).append(`<li class="${item.done}"><span><i class="fa fa-trash" aria-hidden="true"></i></span>${new_todo}<p class="close"><i class="fa fa-check" aria-hidden="true"></i></p></li>`);
+			        $(`section #${list_name}`).append(`<li class="${item.done}"><span><i class="fa fa-trash" aria-hidden="true"></i></span>${item.values}<p class="close"><i class="fa fa-check" aria-hidden="true"></i></p></li>`);
                 });
             })
             // $("#add_bookmark").html(result.bookmark_contents);
