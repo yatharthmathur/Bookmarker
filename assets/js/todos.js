@@ -1,17 +1,6 @@
 
 	// Adding Hyperlinks for Bookmarks with links
 	function check_links(str) {
-		var newTitle;
-		var icon;
-		$.ajax({ type: "GET",   
-			url: str,   
-			async: false,
-			success : function(responseHtml)
-			{
-				newTitle = $(responseHtml).filter('title').text();
-				icon = $(responseHtml).filter('link').attr("href");
-			}
-		});
 		var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig;
 		var replaced_text = str.replace(regex, `<a href='$1' id='link' target='_blank'>$1</a>`);
 		return(replaced_text);
@@ -40,7 +29,9 @@
 		$("#new_list_name").val("");
 	}
 
-
+	function expand(){
+		$("#add_bookmark").toggleClass("card-columns");
+	}
 	//function to run the add new list funtion when button is clicked
 	$("#new_bookmark").click(function(){
 		addNewList();
@@ -92,6 +83,7 @@
 		}
 		//to check for links and make them hyperlinks
 	});
+	
 	
 	
 
